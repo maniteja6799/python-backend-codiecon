@@ -2,7 +2,18 @@ import tweepy
 from tweepy import Stream
 from tweepy.streaming import StreamListener
 from kafka import SimpleProducer, KafkaClient
+
 from threading import Thread
+import logging
+from elasticsearch import Elasticsearch
+
+es = Elasticsearch([{"host": "localhost", "port": 9200}])
+LOG = logging.getLogger(__name__)
+LOG.setLevel(logging.DEBUG)
+ELASTICSEARCH_INDEX = "twitter"
+ELASTICSEARCH_TYPE = "tweet"
+INDEX_BODY_PATH = "resources/index_settings_mappings.json"
+
 
 consumer_key = 'UZ4u0kuF5i4uRXcxSk5Iv8ZnJ'
 consumer_secret = 'wLMtGwt8WxMWgqpipU28xOYPTrTW72znEQsCgS801XTXyYZIqU'
@@ -17,7 +28,7 @@ auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
 auth.set_access_token(access_token, access_secret)
 	
 api = tweepy.API(auth)
-
+twitter_stream = Stream(auth, MyListener())
 
 def pollCurrentStreaming():
 	global flag
@@ -62,7 +73,12 @@ class MyListener(StreamListener):
 		print(status)
 		return True    
 
-twitter_stream = Stream(auth, MyListener())
-
 threadPoll = Thread(target= pollCurrentStreaming)
 threadStream = Thread(target = startStreaming)
+
+def recreateIndex():
+    LOG.info("recreating index : " + ELASTICSEARCH_INDEX + " with file: " + INDEX_BODY_PATH)
+    es.indices.delete(index= ELASTICSEARCH_INDEX)
+    with open(INDEX_BODY_PATH, "r") as f:
+        index_body = f.read()
+        es.indices.create(index= ELASTICSEARCH_INDEX, body= index_body)
