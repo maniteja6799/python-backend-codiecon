@@ -7,7 +7,7 @@ from threading import Thread
 import logging
 from elasticsearch import Elasticsearch
 
-es = Elasticsearch([{"host": "localhost", "port": 9200}])
+es = Elasticsearch([{"host": "172.16.28.35", "port": 9200}])
 LOG = logging.getLogger("tweets")
 LOG.setLevel(logging.DEBUG)
 ELASTICSEARCH_INDEX = "twitter"
@@ -57,10 +57,11 @@ class ThreadPoll(Thread):
 		if twitter_stream.running is True:
 			twitter_stream.disconnect() 		
 	def run(self):
-		global threadStream, flag
+		global threadStream, flag, recreateIndex
 		while True:
 			if flag is True:
 				self.stopStreaming()
+				recreateIndex()
 				flag = False
 				threadStream.setFlagStartStreaming(True)
 threadPoll = ThreadPoll()
