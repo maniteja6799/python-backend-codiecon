@@ -1,5 +1,5 @@
 from flask import Flask, request, render_template
-from tweets import streamTweets
+from tweets import processStream
 
 app = Flask(__name__)
 
@@ -11,7 +11,7 @@ def inputKeyword():
 def display():
 	print("button pressed")
 	print(request.form['query'])
-	streamTweets(request.form['query'])
+	processStream(request.form['query'])
 	print("returning from process method")
 	return render_template('input.html', message="Your request is proccessed")
 
