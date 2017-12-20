@@ -1,0 +1,20 @@
+<!DOCTYPE HTML>
+<HTML>
+<HEAD>
+<TITLE>
+Check Popularity
+</TITLE>
+</HEAD>
+<BODY>
+<FORM action="/process" method="POST">
+<INPUT type ="text" name="query"> 
+<br/>
+<INPUT type="submit" name ="search">
+</FORM>
+<div>
+	{% if message %}
+		<h4>{{message}}</h4>
+	{% endif %}
+</div>
+</BODY>
+</HTML> 
