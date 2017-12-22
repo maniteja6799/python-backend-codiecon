@@ -20,12 +20,12 @@ def display():
 	if request.form['query'] == query:
 		print("got the same request as the previous one, current request: " 
 			+ request.form['query'] + " previous request: " + query)
-		return render_template('input.html', message="Your request is proccessed")
+		return render_template('input.html')
 	query = request.form['query']
 	print("processing request: " + query)
 	processStream(request.form['query'])
 	print("returning from process method")
-	return render_template('input.html', message="Your request is proccessed")
+	return render_template('input.html')
 
 if __name__ == "__main__":
 	app.run()

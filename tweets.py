@@ -2,7 +2,7 @@ import tweepy
 from tweepy import Stream
 from tweepy.streaming import StreamListener
 from kafka import SimpleProducer, KafkaClient
-
+import time
 from threading import Thread
 import logging
 from elasticsearch import Elasticsearch
@@ -39,7 +39,7 @@ class ThreadStreaming(Thread):
 	def startStreaming(self):
 		global twitter_stream, flag
 		self.flagStartStreaming = False
-		twitter_stream.filter(track=query.split(","))
+		twitter_stream.filter(languages=["en"], track=query.split(","))
 	def run (self):
 		while True:
 			if self.flagStartStreaming is True:
@@ -60,7 +60,7 @@ class ThreadPoll(Thread):
 		global threadStream, flag, recreateIndex
 		while True:
 			if flag is True:
-				self.stopStreaming()
+				self.stopStreaming();time.sleep(15);
 				recreateIndex()
 				flag = False
 				threadStream.setFlagStartStreaming(True)
@@ -93,7 +93,7 @@ def processStream(input_query):
 
 def recreateIndex():
     print("recreating index : " + ELASTICSEARCH_INDEX + " with file: " + INDEX_BODY_PATH)
-    es.indices.delete(index= ELASTICSEARCH_INDEX)
+    es.indices.delete(index= ELASTICSEARCH_INDEX, ignore=[400, 404])
     with open(INDEX_BODY_PATH, "r") as f:
         index_body = f.read()
         es.indices.create(index= ELASTICSEARCH_INDEX, body= index_body)
