@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Trends - Realtime Form Twitter</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{{url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
+
+    <!-- Custom fonts for this template -->
+    <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
+    <link href="{{url_for('static', filename='vendor/font-awesome/css/font-awesome.min.css')}}" rel="stylesheet">
+    <link href="{{url_for('static', filename='vendor/devicons/css/devicons.min.css')}}" rel="stylesheet">
+    <link href="{{url_for('static', filename='vendor/simple-line-icons/css/simple-line-icons.css')}}" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="{{url_for('static', filename='css/resume.css')}}" rel="stylesheet">
+
+  </head>
+
+  <body id="page-top">
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
+      <a class="navbar-brand js-scroll-trigger" href="#page-top">
+        <span class="d-none d-lg-block">
+          <img class="img-fluid img-profile rounded-circle mx-auto mb-2" src="{{url_for('static', filename='img/twitter.png')}}" alt="">
+        </span>
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#keywords">Enter Keywords</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#trends">Realtime Trends</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <div class="container-fluid ">
+
+      <section class="resume-section p-3 p-lg-5 d-flex d-column" id="keywords">
+        <div class="my-auto">
+          <div class="row">
+            <div class="col-md-8">
+              <img src="{{url_for('static', filename='img/img4.png')}}", class="img-rounded" width="500px">
+            </div>
+          </div>
+<!-- 
+          <form  action="/process" method="POST">
+            <input type="text" name ="query" >
+            <input type="submit" name ="search"></input>
+          </form> -->
+          <form class="form-inline" action="/process" method="POST">
+            <div class="form-group">
+              <div class="input-group">
+                <input type="text" class="form-control"  name ="query" placeholder="Keywords...">
+              </div>
+            </div>
+            <input type="submit" class="btn btn-primary" name="search" value="See Trends"></input>
+          </form>
+          
+        </div>
+      </section>
+
+
+      <section class="" id="trends">
+      	<iframe src="http://ph.db:5602/app/kibana#/dashboard/996a78d0-e60b-11e7-8c4b-31c77458b7a2?embed=true&_g=(refreshInterval%3A('%24%24hashKey'%3A'object%3A1027'%2Cdisplay%3A'5%20seconds'%2Cpause%3A!f%2Csection%3A1%2Cvalue%3A5000)%2Ctime%3A(from%3Anow-30m%2Cmode%3Aquick%2Cto%3Anow))" height="720px" width="100%"></iframe>
+      </section>
+
+    </div>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="{{url_for('static', filename='vendor/jquery/jquery.min.js')}}"></script>
+    <script src="{{url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="{{url_for('static', filename='vendor/jquery-easing/jquery.easing.min.js')}}"></script>
+
+    <!-- Custom scripts for this template -->
+    <script src="{{url_for('static', filename='js/resume.min.js')}}"></script>
+
+  </body>
+
+</html>
